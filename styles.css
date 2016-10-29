@@ -1,0 +1,166 @@
+body { 
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, h2, h3 {
+    font-weight: normal;
+    color: #a3a3a3;
+}
+
+.orange {
+    color: #f0634c;
+}
+
+.remark-code, .remark-inline-code { 
+    font-family: 'Monospace'; 
+} 
+
+.remark-slide-content:not(.center) {
+    background-image: url("logo-pg.jpg");
+    background-size: 70px;
+    background-position: 0% 0%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.footnote {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+}
+
+.remark-slide-content h1 {
+    position: absolute;
+    left: 70px;
+    top: 0;
+    width: 100%;
+    background-color: #f0634c;
+    color: white;
+    font-size: 36pt;
+    margin: 0;
+    padding: 0.2em;
+}
+
+.remark-slide-content h2 {
+    font-size: 48pt;
+    margin-top: 1.6em;
+}
+
+.remark-slide-content ol,
+.remark-slide-content ul {
+    font-size: 1.6em;
+    line-height: 2em;
+}
+
+a {
+    color: #f0634c;
+    text-decoration: none;
+    border-bottom: 0.05em solid #f0634c;
+}
+
+/*
+img {
+    width: 7em;
+    height: 7em;
+    display: flex;
+    padding: 1.2em;
+    margin: auto;
+}
+*/
+
+img {
+    width: 100%;
+}
+
+.logos {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+}
+
+.question {
+    font-size: 2.6em;
+}
+.question h1 {
+    font-size: 1.4em;
+}
+#slide-title h1, .question h1, .question h2 {
+    color: black;
+    background: white;
+    position: relative;
+    left: 0;
+    padding: 0;
+}
+
+#slide-title h1 {
+    font-size: 48pt;
+}
+
+#slide-title h1 {
+    color: #f0634c;
+}
+
+.last h2 {
+    color: black;
+}
+
+.footnote img {
+    height: 42px;
+    padding: 0;
+    margin: auto;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.references li {
+    line-height: normal;
+}
+
+.references ul {
+    list-style: none;
+    padding: 0;
+}
+
+.references a {
+    color: #a3a3a3;
+    line-height: 0;
+    border-bottom: 0.05em solid #a3a3a3;
+    font-size: 0.5em;
+}
+
+/** first slide **/
+div#slide-title h1 {
+    font-size: 6em;
+}
+div#slide-title h2 {
+    font-size: 2.8em;
+}
+div#slide-title h3 {
+    font-family: 'Source Sans Pro';
+    font-size: 1.4em;
+}
+
+.hell {
+    margin-top: 7em;
+}
+.hell img {
+    max-width: 61%;
+    display: table-cell;
+    padding: 1em;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    font-style: italic;
+}

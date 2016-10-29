@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Elm @MaltaJS</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+            @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+            @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+            @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro|Tinos:700i);
+
+            h1 { font-family: 'Source Sans Pro'; }
+            h2 {
+                font-family: 'Tino';
+                font-weight: 700;
+                font-style: italic;
+            }
+            h3 {
+                font-family: 'Yanone Kaffeesatz';
+                font-weight: normal;
+            }
+            .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+        </style>
+    </head>
+    <body>
+        <textarea id="source">
+
+class: center, middle, cover
+name: title
+
+# elm
+## Frontend code without runtime exceptions
+### @PietroGrandi3D
+
+---
+
+# Hi!
+## Pietro Grandi
+1. Frontend developer
+2. Write on [pietrograndi.com](http://www.pietrograndi.com/blog)
+3. Born as 3D Artist
+
+---
+
+# Runtime exception
+.hell[
+    ![Error](error1.png "Error")
+    ![Error](error2.png "Error")
+    ![Error](error4.png "Error")
+    ![Error](error3.png "Error")
+]
+
+---
+
+# Runtime exception
+## When does it happen?
+### Calling unexisting methods
+```javascript
+var aString = 1;
+var first = aString.slice(0,1);
+```
+
+---
+
+# Runtime exception
+## When does it happen?
+### Your program expects a type to be a different one
+```javascript
+var aString = 1;
+var first = aString.slice(0,1);
+```
+![A runtime exception](runtime-exception.png "A runtime exception")
+
+---
+
+# Runtime exception
+## What causes it?
+1. inconsistent data from external sources
+2. error loading dependencies
+3. bugs
+
+---
+
+# Runtime exception
+## What causes it?
+1. inconsistent data from external sources
+2. error loading dependencies
+3. .orange[bugs]
+
+* we can control bugs
+
+---
+
+# Bugs
+## Can't I prevent bugs?
+* you _should_ be able to
+* [a simple JS bug](https://gist.github.com/pietro909/987d2015dbce8c89d259e2b72fa17c2a)
+
+```javascript
+    function contains(c, s) {
+      var index = s.indexOf(c);
+      return index > -1;
+    }
+
+    console.log(contains("hi", "there")); // false
+    console.log(contains("hi", "hi!"));   // true
+    console.log(contains("hi", 1));       // TypeError: s.indexOf is 
+                                          // not a function
+```
+
+---
+
+# Bugs
+## Bring back type checking
+* apply defensive techniques
+* [check against type](https://gist.github.com/pietro909/587ff2336a92eb5357d0fd002349eaec)
+
+```javascript
+    function contains(c, s) {
+      var index = typeof s === 'string' ? s.indexOf(c) : -1;
+      return index > -1;
+    }
+
+    console.log(contains("hi", "there"));  // false
+    console.log(contains("hi", "hi!"));    // true
+    console.log(contains("hi", 1));        // false
+```
+
+---
+
+# Bugs
+## Figthing bugs
+
+* use a linter
+* put runtime checks/assertions
+* handle corner cases
+* write more tests
+* try to rule your growing codebase
+
+---
+
+class: center, middle
+
+.question[
+# Isn't this a job for a compiler?
+]
+
+---
+
+# Bugs
+## Catch'em at compile time
+* static type checking
+* non-nullable types
+* no implicit casts
+* referential transparency
+
+---
+
+# Bugs
+## How does Elm behave?
+```elm
+    contains c s =
+      (List.length (String.indexes c s)) > 0
+
+    v = contains "hi" 1
+```
+[runnable example here](https://gist.github.com/pietro909/27f7d05c2fd3a0818d011f343ce73475)
+
+---
+
+# Bugs
+## Doesn't compile
+```elm
+    contains c s =
+      (List.length (String.indexes c s)) > 0
+
+    v = contains "hi" 1
+```
+![A compile error](compile-error.png "A compile error")
+
+---
+
+class: center, middle
+
+.question[
+# Cool.
+What is Elm?
+]
+
+---
+
+# Elm
+## What is Elm
+* functional language
+* declarative UI design
+* ML-like syntax
+* immutable data structures
+* statically and strongly typed
+
+---
+
+# Elm
+## Strong typing
+
+```elm
+    if 0 then
+      doStuff
+    else
+      differentStuff
+```
+![Strongly typed](strongly-typed.png "Strongly typed")
+
+---
+
+# Elm
+## Immutable data structures
+
+```elm
+    a = 2
+    a = a + 3
+```
+![Immutability](immutability.png "Immutability")
+
+---
+
+# Elm
+## Features
+* compiles to Javascript
+* follows Elm Architecture
+* fast
+* enforces semantic versioning
+* Javascript interoperability
+
+---
+
+# Elm architecture
+## The pattern
+* model: _the state_
+* update: _modify your state_
+* view: _show your state_
+
+---
+
+# Elm architecture
+## Looks like Redux
+![Model, view, update](MUV.png "Model, view, update")
+.footer[
+    [actually, Redux has been inspired by the Elm architecture...](http://redux.js.org/docs/introduction/PriorArt.html#elm)
+]
+---
+
+# Elm architecture
+## Looks like Redux
+![Model, view, update](MUV.png "Model, view, update")
+* it is part of the language
+* no plugins, libraries, hacks
+
+.footer[
+    [actually, Redux has been inspired by the Elm architecture...](http://redux.js.org/docs/introduction/PriorArt.html#elm)
+]
+
+---
+
+# Performances
+## The virtual DOM
+* evaluate what changes
+* render what is needed
+
+---
+
+# Performances
+## JS output
+* use arrays instead of dictionaries
+* references instead of looking up
+* fully initialize objects
+* ...and many others
+
+---
+
+class: center, middle
+
+![Comparison chart](performances.png "Comparison chart")
+.footer[
+    [source](http://elm-lang.org/blog/blazing-fast-html-round-two)
+]
+---
+
+class: center, middle
+
+.question[
+# Sorry, I lied
+You can still get runtime exceptions
+]
+
+---
+
+class: center, middle
+
+.question[
+# Sorry, I lied
+You can still get runtime exceptions
+]
+
+If you use Javascript.
+
+---
+
+# Javascript interoperability
+## Manual bootstrap
+```javascript
+    var mountNode = document.getElementById('main');
+    var myApp = Elm.Main.embed(mountNode);
+```
+* can act on a subset of the page
+* allows for slow integration
+* can build a small module
+
+---
+
+# Javascript interoperability
+## Ports
+* get data from JS code
+* send data to JS code
+* typed ports
+* runtime assertions
+
+---
+
+# Javascript interoperability
+## Inbound ports
+* define the port
+
+```elm
+    type alias Move = (Float, Float)
+
+    port scroll : (Move -> msg) -> Sub msg
+```
+* send data from JS code
+
+```javascript
+    myApp.ports.scroll.send([scroll, newScroll]);
+```
+
+.footer[
+    code from [MaltaJS Elm app](https://github.com/pietro909/maltajs-elm)
+]
+
+---
+
+# Javascript interoperability
+## Outbound ports
+* define the port
+
+```elm
+    port todoListChanges : (List TodoItem) -> Cmd msg
+```
+
+* listen for data
+
+```javascript
+    myApp.ports.todoListChanges.subscribe((updatedTodoList) => { /*...*/ }) 
+```
+.footer[
+    code from [TodoMVC done in Elm](https://github.com/pietro909/flux/blob/elm-integration/examples/flux-todomvc/)
+]
+
+---
+
+# Package system
+## Elm Package Manager
+* forces documentation with a precise format
+* must document every public item
+* automatic semantic versioning
+
+---
+
+class: center, middle, cover
+name: title
+
+# Thank you!
+## References:
+.references[
+* [Elm website](http://elm-lang.org/)
+* [Elm slack community](https://elmlang.slack.com/)
+* [Elm architecture](https://guide.elm-lang.org/architecture/)
+* [Move fast and don't break things](https://medium.com/the-ahead-story/move-fast-and-dont-break-things-running-a-startup-on-elm-b5491082fe8b#.uj3kt3kkf)
+]
+        </textarea>
+        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+        </script>
+        <script>
+            var slideshow = remark.create();
+        </script>
+    </body>
+</html>
