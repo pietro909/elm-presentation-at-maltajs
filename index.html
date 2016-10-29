@@ -43,19 +43,16 @@ name: title
 
 ---
 
-# Runtime exception
-.hell[
-    ![Error](error1.png "Error")
-    ![Error](error2.png "Error")
-    ![Error](error4.png "Error")
-    ![Error](error3.png "Error")
-]
+class: center, middle
+
+## Runtime exception
 
 ---
 
 # Runtime exception
 ## When does it happen?
-### Calling unexisting methods
+* calling unexisting methods
+
 ```javascript
 var aString = 1;
 var first = aString.slice(0,1);
@@ -65,12 +62,39 @@ var first = aString.slice(0,1);
 
 # Runtime exception
 ## When does it happen?
-### Your program expects a type to be a different one
+* calling unexisting methods
+
 ```javascript
 var aString = 1;
 var first = aString.slice(0,1);
 ```
+* your program expects a type to be a different one
+
 ![A runtime exception](runtime-exception.png "A runtime exception")
+
+---
+
+class: center, middle
+
+## You discover it by the time you run that specific code
+
+---
+
+
+# Runtime exception
+## What causes it?
+1. inconsistent data from external sources
+
+![Error](error1.png "Error")
+
+---
+
+# Runtime exception
+## What causes it?
+1. inconsistent data from external sources
+2. error loading dependencies
+
+![Error](error3.png "Error")
 
 ---
 
@@ -79,6 +103,8 @@ var first = aString.slice(0,1);
 1. inconsistent data from external sources
 2. error loading dependencies
 3. bugs
+
+![A runtime exception](runtime-exception.png "A runtime exception")
 
 ---
 
@@ -130,7 +156,7 @@ var first = aString.slice(0,1);
 ---
 
 # Bugs
-## Figthing bugs
+## Figthing bugs in JS
 
 * use a linter
 * put runtime checks/assertions
@@ -142,9 +168,7 @@ var first = aString.slice(0,1);
 
 class: center, middle
 
-.question[
-# Isn't this a job for a compiler?
-]
+## Isn't this a job for a compiler?
 
 ---
 
@@ -165,7 +189,9 @@ class: center, middle
 
     v = contains "hi" 1
 ```
-[runnable example here](https://gist.github.com/pietro909/27f7d05c2fd3a0818d011f343ce73475)
+.footer[
+    [runnable example here](https://gist.github.com/pietro909/27f7d05c2fd3a0818d011f343ce73475)
+]
 
 ---
 
@@ -179,14 +205,17 @@ class: center, middle
 ```
 ![A compile error](compile-error.png "A compile error")
 
+.footer[
+    [runnable example here](https://gist.github.com/pietro909/27f7d05c2fd3a0818d011f343ce73475)
+]
+
+
 ---
 
 class: center, middle
 
-.question[
-# Cool.
-What is Elm?
-]
+## Cool.
+### What is Elm?
 
 ---
 
@@ -225,12 +254,34 @@ What is Elm?
 ---
 
 # Elm
+## Functional
+* first-class functions
+* all functions can be partially applied
+
+```elm
+  contains c s =
+    (List.length (String.indexes c s)) > 0
+
+  containsH = contains "h" -- a new function
+```
+
+* all functions **always** return
+  
+---
+
+# Elm
 ## Features
 * compiles to Javascript
-* follows Elm Architecture
-* fast
-* enforces semantic versioning
+* follows **Elm Architecture**
+* **inference** engine
+* enforces **semantic versioning**
 * Javascript interoperability
+
+---
+
+class: center, middle
+
+## Elm Architecture?
 
 ---
 
@@ -239,6 +290,44 @@ What is Elm?
 * model: _the state_
 * update: _modify your state_
 * view: _show your state_
+
+---
+
+# Elm architecture
+## The pattern
+* model: _the state_
+* update: _modify your state_
+* view: _show your state_
+* _update_ changes model using _messages_
+
+---
+
+# A trivial example
+## The counter!
+
+```elm
+main =
+  beginnerProgram { model = 0, view = view, update = update }
+
+type Msg = Increment | Decrement
+
+update msg model =
+  case msg of
+    Increment -> model + 1
+    Decrement -> model - 1
+
+view model =
+  div []
+    [ button [ onClick Decrement ] [ text "-" ]
+    , div [] [ text (toString model) ]
+    , button [ onClick Increment ] [ text "+" ]
+    ]
+
+```
+
+.footer[
+    [try it live!](http://elm-lang.org/examples/buttons)
+]
 
 ---
 
@@ -255,6 +344,7 @@ What is Elm?
 ![Model, view, update](MUV.png "Model, view, update")
 * it is part of the language
 * no plugins, libraries, hacks
+* just one way to go
 
 .footer[
     [actually, Redux has been inspired by the Elm architecture...](http://redux.js.org/docs/introduction/PriorArt.html#elm)
@@ -266,6 +356,7 @@ What is Elm?
 ## The virtual DOM
 * evaluate what changes
 * render what is needed
+* lazy evaluation
 
 ---
 
@@ -274,7 +365,14 @@ What is Elm?
 * use arrays instead of dictionaries
 * references instead of looking up
 * fully initialize objects
-* ...and many others
+* hooks to `requestAnimationFrame` to save work
+
+---
+
+class: center, middle
+
+## How does it compare to competitors?
+
 
 ---
 
@@ -288,19 +386,15 @@ class: center, middle
 
 class: center, middle
 
-.question[
-# Sorry, I lied
-You can still get runtime exceptions
-]
+## Sorry, I lied
+### You can still get runtime exceptions
 
 ---
 
 class: center, middle
 
-.question[
-# Sorry, I lied
-You can still get runtime exceptions
-]
+## Sorry, I lied
+### You can still get runtime exceptions
 
 If you use Javascript.
 
@@ -371,7 +465,7 @@ If you use Javascript.
 ## Elm Package Manager
 * forces documentation with a precise format
 * must document every public item
-* automatic semantic versioning
+* automatic **semantic versioning**
 
 ---
 
